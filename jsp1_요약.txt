@@ -1,0 +1,49 @@
+1. JSP 기본 문법
+
+1) 스크립트 릿 : <% 자바 코드 작성 %>
+
+2) 표현식 : <%= 태그 요소에 출력 내용(자바 변수, 수식, 메소드 등) 작성 %>
+		// 자바스크립트는 표현식 기호 ${ }
+		
+3) 지시자 : <%@ %> jsp 설정 관련
+		// page 지시자 <%@ page %>: 언어 선택 (java), import 등
+		// .jsp 파일에서는 필수적인 지시자
+		// include 지시자 : file="파일명"
+		//		① file 속성으로 지정된 소스코드를 포함시키기
+		//		② 컴파일(.java를 생성해서 .class로 컴파일)
+		
+2. JSP 내장 객체
+- 내장 embeded : 이미 만들어진 객체를 선언하지 않고도 사용할 수 있다.
+
+1) out : html 문서에 출력, 태그 / 스타일 / 자바스크립트 동작이 될 수 있다.
+
+2) request : 요청, 사용자가 서버로 보낸 요청 정보를 저장하는 객체
+	- .getRequestURL(), getRequestURI(), getContextPath() 메소드 : 메소드로 요청 정보 확인하기
+	- .getParameter() 메소드 	: form 입력값 가져오기 (input의 name 속성값이 입력 파라미터 이름이므로 일치해야 함. 중요!!)
+							: method는 get, post (post로 전달된 값 중에 한글 등 다국어 문자는 꼭 set 인코딩을 해야 한다.)
+							: 지정된 이름의 파라미터가 없는 경우, null을 출력한다.	=> Exception의 원인
+							
+	- .getAttribute() 메소드 	: 데이터 값을 다른 .jsp 페이지로 전달하는 목적		// 데이터 값 : List나 dao 같은 값
+							: 데이터를 저장하고 유지하는 범위도 설정할 수 있다.
+							: day3에는 request일 때의 사용 범위를 확인한다.
+
+3) pageContext : 현재 서버 페이지의 객체
+
+4) response : 요청에 대한 응답 객체
+
+5) session : 브라우저 단위의 연결로 만들어지는 객체
+
+6) application : 서버가 실행하고 있는 프로그램에 대해 만들어지는 객체 (지금의 경우 Tomcat)
+	
+사용 범위 : pageContext < "request" < "session" < application
+=> attribute를 위 4개의 jsp 객체에 모두 저장할 수 있다.
+=> 단, 데이터가 유지되는 시간(범위)이 다르다.
+=> .setAttribute(), .getAttribute() 메소드를 사용해서 저장하기와 가져오기를 실행할 수 있다.
+
+3. JSP 애트리뷰트 : 여러개의 JSP 파일들 사이에 데이터(변수값)를 전달 및 공유하기 위한 방법
+
+
+* 주의사항
+웹 애플리케이션에 ojdbc11.jar 파일은 WEB-INF 폴더 아래 lib 폴더로 복사해서 라이브러리를 사용한다.
+			===> java 11 버전 이상이어야 한다.
+오라클 11g Express Edition 설치하면 ojdbc8.jar, java 8(jdk 1.8) 버전 사용 가능
